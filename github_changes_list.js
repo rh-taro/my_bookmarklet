@@ -47,12 +47,12 @@ javascript:(() => {
       let isChecked = true;
       if (document.getElementById(`diff-${idx}`).classList.contains('Details--on')) isChecked = false;
       const fileName = el.innerText;
-      fileListHtml += `<input type="checkbox"` + (isChecked ? ' checked ' : ' ') + `class="fileListCheckBox" data-idx="${idx}"> <a data-idx="${idx}" class="fileAnchor" href="${el.href}">${fileName}</a><br>`
+      fileListHtml += `<input type="checkbox"` + (isChecked ? ' checked ' : ' ') + `class="fileListCheckBox" data-idx="${idx}"> <a data-idx="${idx}" class="fileAnchor" href="${el.href}" style="color: #ffffff; text-decoration: none;"><div style="display: inline-block;padding: 0.7rem 0;">${fileName}</div></a><br>`
       idx++;
     });
 
     const div = document.createElement('div');
-    div.style = 'right: 0; padding: 25px;cursor: move; max-height: 80vh;overflow: auto;position: fixed; top: 100px; white-space: nowrap;background-color: #c0c0c0;z-index:1000;';
+    div.style = 'line-height: 0;right: 0; padding: 25px;cursor: move; max-height: 80vh;overflow: auto;position: fixed; top: 100px; background-color: #252525;z-index:1000;';
     div.innerHTML = fileListHtml;
     div.id = 'fileListHtml';
     document.querySelector('.footer').appendChild(div);
@@ -83,10 +83,10 @@ javascript:(() => {
     const idx = e.target.dataset.idx;
     if (prevEl) {
       prevEl.id = '';
-      prevEl.style = '';
+      prevEl.style.color = '#ffffff';
     }
     e.target.id = 'nowAnchor';
-    e.target.style = 'color: red;';
+    e.target.style.color = 'red';
   }
 
   /* ここから先はDnDの関数群 */

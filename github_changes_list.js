@@ -52,7 +52,7 @@ javascript:(() => {
     });
 
     const div = document.createElement('div');
-    div.style = 'line-height: 0;right: 0; padding: 25px;cursor: move; max-height: 80vh;overflow: auto;position: fixed; top: 100px; background-color: #252525;z-index:1000;';
+    div.style = 'white-space: nowrap; line-height: 0;right: 0; padding: 25px;cursor: move; max-height: 80vh;overflow: auto;position: fixed; top: 100px; background-color: #252525;z-index:1000;';
     div.innerHTML = fileListHtml;
     div.id = 'fileListHtml';
     document.querySelector('.footer').appendChild(div);

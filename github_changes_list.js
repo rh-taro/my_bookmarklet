@@ -33,12 +33,18 @@ javascript:(() => {
     const listEl = getListEl();
     listEl.parentNode.removeChild(listEl);
 
-    const wrapEl = document.querySelector('.container.new-discussion-timeline.experiment-repo-nav');
-    wrapEl.style = '';
+    let wrapEl = document.querySelector('.container.new-discussion-timeline.experiment-repo-nav');
+    if (wrapEl) wrapEl.style = '';
+    /* commit compare用 */
+    wrapEl = document.getElementById('files_bucket').parentNode;
+    if (wrapEl) wrapEl.style = '';
   }
   function originStyleModify() {
-    const wrapEl = document.querySelector('.container.new-discussion-timeline.experiment-repo-nav');
-    wrapEl.style = 'margin-left: 1%';
+    let wrapEl = document.querySelector('.container.new-discussion-timeline.experiment-repo-nav');
+    if (wrapEl) wrapEl.style = 'margin-left: 1%';
+    /* commit compare用 */
+    wrapEl = document.getElementById('files_bucket').parentNode;
+    if (wrapEl) wrapEl.style = 'margin-left: 1%';
   }
   function showFileListBox() {
     let fileListHtml = "";
@@ -66,6 +72,12 @@ javascript:(() => {
 
     document.querySelectorAll('.fileAnchor').forEach((el) => {
       el.addEventListener('click', onClickFileAnchor);
+      el.addEventListener('mouseover', (e) => {
+        e.target.style['background-color'] = '#555555';
+      });
+      el.addEventListener('mouseout', (e) => {
+        e.target.style['background-color'] = '';
+      });
     });
   }
   function onClickCheck(e) {

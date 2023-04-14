@@ -17,52 +17,43 @@ div.onclick = () => {
   div.classList.add('btnDisabled');
   block_with_message();
   Promise.all([...document.querySelectorAll('input[id^="automate_target_"]:checked')].map(el => {
-    return new Promise((resolve, reject) => {
-      const xhr = new XMLHttpRequest();
-      const fd = new FormData();
-      xhr.withCredentials = true;
-      xhr.open('post', `https://p.ieyasu.co/works/${el.dataset.dayId}`, true);
-      fd.append('parent_id', new URL(document.querySelector('a[href^="/works/month_application"]').href).searchParams.get('pid'));
-      fd.append('d', document.getElementById('select').value);
-      fd.append('work[day]', `${document.getElementById('select').value}-${el.dataset.day}`);
-      fd.append('authenticity_token', document.getElementsByName('authenticity_token')[0].value);
-      fd.append('work[start_at_str]', '10:30');
-      fd.append('_method', 'patch');
-      fd.append('utf8', '✓');
-      fd.append('work[segment_id]', '1');
-      fd.append('prev_segment_id', '1');
-      fd.append('work[start_at_str]', '10:30');
-      fd.append('work[next_day_start]', '');
-      fd.append('work[end_at_str]', '19:30');
-      fd.append('work[next_day_end]', '');
-      fd.append('work[break_1_start_at_str]', '14:30');
-      fd.append('work[next_day_break_1_start]', '0');
-      fd.append('work[break_1_end_at_str]', '15:30');
-      fd.append('work[next_day_break_1_end]', '0');
-      fd.append('work[break_1_auto]', 'true');
-      fd.append('work[break_2_start_at_str]', '');
-      fd.append('work[next_day_break_2_start]', '0');
-      fd.append('work[break_2_end_at_str]', '',);
-      fd.append('work[next_day_break_2_end]', '0');
-      fd.append('work[notes]', '');
-      fd.append('work[status]', 1);
-      fd.append('removed_ids', '');
-      fd.append('work[break_2_auto]', 'false');
-      fd.append('kango_time_paid_holiday_time_zones[1][time_at]', '');
-      fd.append('kango_time_paid_holiday_time_zones[1][time_length]', '0');
-      fd.append('kango_time_paid_holiday_time_zones[0][time_length]', '0');
-      fd.append('holiday', 'false'); 
-      fd.append('commit', '登録する');
-      xhr.onerror = reject;
-      xhr.onload = () => {
-        if (200 !== xhr.status) {
-          reject();
-        } else {
-          resolve();
-        }
-      };
-      xhr.send(fd);
-    });
+    const body = new FormData();  
+    body.append('parent_id', new URL(document.querySelector('a[href^="/works/month_application"]').href).searchParams.get('pid'));
+    body.append('d', document.getElementById('select').value);
+    body.append('work[day]', `${document.getElementById('select').value}-${el.dataset.day}`);
+    body.append('authenticity_token', document.getElementsByName('authenticity_token')[0].value);
+    body.append('_method', 'patch');
+    body.append('utf8', '✓');
+    body.append('work[segment_id]', '1');
+    body.append('prev_segment_id', '1');
+    body.append('work[next_day_start]', '');
+    body.append('work[next_day_end]', '');
+    body.append('work[next_day_break_1_start]', '0');
+    body.append('work[next_day_break_1_end]', '0');
+    body.append('work[break_1_auto]', 'true');
+    body.append('work[break_2_start_at_str]', '');
+    body.append('work[next_day_break_2_start]', '0');
+    body.append('work[break_2_end_at_str]', '',);
+    body.append('work[next_day_break_2_end]', '0');
+    body.append('work[notes]', '');
+    body.append('work[status]', 1);
+    body.append('removed_ids', '');
+    body.append('work[break_2_auto]', 'false');
+    body.append('kango_time_paid_holiday_time_zones[1][time_at]', '');
+    body.append('kango_time_paid_holiday_time_zones[1][time_length]', '0');
+    body.append('kango_time_paid_holiday_time_zones[0][time_length]', '0');
+    body.append('holiday', 'false'); 
+    body.append('commit', '登録する');
+
+    body.append('work[start_at_str]', '10:30');
+    body.append('work[end_at_str]', '19:30');
+    body.append('work[break_1_start_at_str]', '14:30');
+    body.append('work[break_1_end_at_str]', '15:30');    
+
+    const method = 'POST';
+    const credentials = 'include';
+
+    return fetch(`https://p.ieyasu.co/works/${el.dataset.dayId}`, { method, body, credentials });
   })).then(() => {
     location.reload();
   });

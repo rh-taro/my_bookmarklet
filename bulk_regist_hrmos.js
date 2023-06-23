@@ -1,13 +1,14 @@
-document.querySelectorAll(`[id^='work_edit']`).forEach(el => {
-  dayId = el.id.replace('work_edit_', '');
-  day = el.parentElement.getElementsByClassName('date')[0].innerText.trim();
+document.querySelectorAll('td > div > a[href^="/works/"]').forEach(el => {
+  dayId = el.parentElement.id.replace('work_edit_', '');
+  day = el.parentElement.parentElement.getElementsByClassName('date')[0].innerText.trim();
 
   input = document.createElement('input');
   input.type = 'checkbox';
   input.id = `automate_target_${dayId}`;
   input.dataset.dayId = dayId;
   input.dataset.day = day;
-  el.appendChild(input);
+  el.parentElement.appendChild(input);
+  el.remove();
 });
 base = document.getElementById('month_apply');
 div = document.createElement('div');
@@ -18,7 +19,7 @@ div.onclick = () => {
   block_with_message();
   Promise.all([...document.querySelectorAll('input[id^="automate_target_"]:checked')].map(el => {
     const body = new FormData();  
-    body.append('parent_id', new URL(document.querySelector('a[href^="/works/month_application"]').href).searchParams.get('pid'));
+    body.append('parent_id', 13000);
     body.append('d', document.getElementById('select').value);
     body.append('work[day]', `${document.getElementById('select').value}-${el.dataset.day}`);
     body.append('authenticity_token', document.getElementsByName('authenticity_token')[0].value);

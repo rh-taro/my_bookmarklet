@@ -1,13 +1,22 @@
 document.querySelectorAll('td > div > a[href^="/works/"]').forEach(el => {
-  dayId = el.parentElement.id.replace('work_edit_', '');
-  day = el.parentElement.parentElement.getElementsByClassName('date')[0].innerText.trim();
+  let dayId = el.parentElement.id.replace('work_edit_', '');
+  let day = el.parentElement.parentElement.getElementsByClassName('date')[0].innerText.trim();
 
-  input = document.createElement('input');
+  let input = document.createElement('input');
   input.type = 'checkbox';
   input.id = `automate_target_${dayId}`;
   input.dataset.dayId = dayId;
   input.dataset.day = day;
   el.parentElement.appendChild(input);
+
+  // クリックの範囲を広げてカーソルをわかりやすくする
+  el.parentElement.parentElement.onclick = (e) => {
+    if (e.srcElement.tagName !== 'INPUT')
+    document.getElementById(input.id).checked = !document.getElementById(input.id).checked;
+  }
+  el.parentElement.parentElement.style = 'cursor: pointer;';
+  input.style = 'cursor: pointer;';
+
   el.remove();
 });
 base = document.getElementById('month_apply');
@@ -60,3 +69,5 @@ div.onclick = () => {
   });
 };
 base.appendChild(div);
+
+

@@ -1,4 +1,4 @@
-// https://ytyng.github.io/bookmarklet-script-compress/ で以下をブックマークレットに変換する
+// https://ytyng.github.io/bookmarklet-script-compress/ で変換する
 (() => {
   document.querySelectorAll('td > div > a[href^="/works/"]').forEach(el => {
     let dayId = el.parentElement.id.replace('work_edit_', '');
@@ -12,11 +12,12 @@
     el.parentElement.appendChild(input);
 
     /* クリックの範囲を広げてカーソルをわかりやすくする */
-    el.parentElement.parentElement.onclick = ((e) => {
-      if (e.srcElement.tagName !== 'INPUT')
+    el.parentElement.parentElement.parentElement.onclick = ((e) => {
+      if (e.srcElement.tagName === 'INPUT') return;
+      if (e.srcElement.tagName === 'A') return;
       document.getElementById(input.id).checked = !document.getElementById(input.id).checked;
     });
-    el.parentElement.parentElement.style = 'cursor: pointer;';
+    el.parentElement.parentElement.parentElement.style = 'cursor: pointer;';
     input.style = 'cursor: pointer;';
 
     el.remove();
@@ -72,4 +73,3 @@
   };
   base.appendChild(div);
 })();
-

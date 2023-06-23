@@ -1,3 +1,4 @@
+// https://ytyng.github.io/bookmarklet-script-compress/ で以下をブックマークレットに変換する
 (() => {
   document.querySelectorAll('td > div > a[href^="/works/"]').forEach(el => {
     let dayId = el.parentElement.id.replace('work_edit_', '');
@@ -10,11 +11,11 @@
     input.dataset.day = day;
     el.parentElement.appendChild(input);
 
-    // クリックの範囲を広げてカーソルをわかりやすくする
-    el.parentElement.parentElement.onclick = (e) => {
+    /* クリックの範囲を広げてカーソルをわかりやすくする */
+    el.parentElement.parentElement.onclick = ((e) => {
       if (e.srcElement.tagName !== 'INPUT')
       document.getElementById(input.id).checked = !document.getElementById(input.id).checked;
-    }
+    });
     el.parentElement.parentElement.style = 'cursor: pointer;';
     input.style = 'cursor: pointer;';
 
@@ -71,3 +72,4 @@
   };
   base.appendChild(div);
 })();
+

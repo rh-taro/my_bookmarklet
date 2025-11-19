@@ -1,6 +1,6 @@
 // https://ytyng.github.io/bookmarklet-script-compress/ で変換する
 (() => {
-  let monthApply = document.getElementById('month_apply')
+  let monthApply = document.getElementById('month_apply');
   if (monthApply.dataset.modified) return;
   monthApply.dataset.modified = true;
 
@@ -31,8 +31,8 @@
     event.target.classList.add('btnDisabled');
     block_with_message();
     Promise.all([...document.querySelectorAll('input[id^="automate_target_"]:checked')].map(el => {
-      const body = new FormData();  
-      body.append('parent_id', parent_id = new URL(document.querySelector('a[href^="/works/month_application"]').href).searchParams.get('pid'));
+      const body = new FormData();
+      body.append('parent_id', 52386);
       body.append('d', document.getElementById('select').value);
       body.append('work[day]', `${document.getElementById('select').value}-${el.dataset.day}`);
       body.append('authenticity_token', document.getElementsByName('authenticity_token')[0].value);
@@ -47,7 +47,7 @@
       body.append('work[break_1_auto]', 'true');
       body.append('work[break_2_start_at_str]', '');
       body.append('work[next_day_break_2_start]', '0');
-      body.append('work[break_2_end_at_str]', '',);
+      body.append('work[break_2_end_at_str]', '');
       body.append('work[next_day_break_2_end]', '0');
       body.append('work[notes]', '');
       body.append('work[status]', 1);
@@ -82,4 +82,3 @@
 
   monthApply.append(div_regist, div_regist_apply);
 })();
-

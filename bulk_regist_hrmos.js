@@ -1,5 +1,9 @@
 // https://ytyng.github.io/bookmarklet-script-compress/ で変換する
 (() => {
+  let monthApply = document.getElementById('month_apply')
+  if (monthApply.dataset.modified) { return }
+  monthApply.dataset.modified = true;
+
   document.querySelectorAll('td > div > a[href^="/works/"]').forEach(el => {
     let dayId = el.parentElement.id.replace('work_edit_', '');
     let day = el.parentElement.parentElement.getElementsByClassName('date')[0].innerText.trim();
@@ -28,7 +32,7 @@
     block_with_message();
     Promise.all([...document.querySelectorAll('input[id^="automate_target_"]:checked')].map(el => {
       const body = new FormData();  
-      body.append('parent_id', 13000);
+      body.append('parent_id', parent_id = new URL(document.querySelector('a[href^="/works/month_application"]').href).searchParams.get('pid'));
       body.append('d', document.getElementById('select').value);
       body.append('work[day]', `${document.getElementById('select').value}-${el.dataset.day}`);
       body.append('authenticity_token', document.getElementsByName('authenticity_token')[0].value);
@@ -76,5 +80,5 @@
   div_regist_apply = Object.assign(document.createElement('div'), { className: 'btn btnSubmit', innerText: '一括登録&申請', onclick: submitAction });
   Object.assign(div_regist_apply.dataset, { key: 'add_application', value: '申請する' });
 
-  document.getElementById('month_apply').append(div_regist, div_regist_apply);
+  monthApply.append(div_regist, div_regist_apply);
 })();

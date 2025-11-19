@@ -1,7 +1,7 @@
 // https://ytyng.github.io/bookmarklet-script-compress/ で変換する
 (() => {
   let monthApply = document.getElementById('month_apply')
-  if (monthApply.dataset.modified) { return }
+  if (monthApply.dataset.modified) return;
   monthApply.dataset.modified = true;
 
   document.querySelectorAll('td > div > a[href^="/works/"]').forEach(el => {
@@ -82,3 +82,4 @@
 
   monthApply.append(div_regist, div_regist_apply);
 })();
+

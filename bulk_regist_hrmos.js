@@ -22,12 +22,9 @@
 
     el.remove();
   });
-  base = document.getElementById('month_apply');
-  div = document.createElement('div');
-  div.className = 'btn btnSubmit';
-  div.innerText = '一括登録';
-  div.onclick = () => {
-    div.classList.add('btnDisabled');
+
+  submitAction = (event) => {
+    event.target.classList.add('btnDisabled');
     block_with_message();
     Promise.all([...document.querySelectorAll('input[id^="automate_target_"]:checked')].map(el => {
       const body = new FormData();  
@@ -56,7 +53,8 @@
       body.append('kango_time_paid_holiday_time_zones[1][time_length]', '0');
       body.append('kango_time_paid_holiday_time_zones[0][time_length]', '0');
       body.append('holiday', 'false'); 
-      body.append('commit', '登録する');
+
+      body.append(event.target.dataset.key, event.target.dataset.value);
 
       body.append('work[start_at_str]', '10:30');
       body.append('work[end_at_str]', '19:30');
@@ -66,10 +64,17 @@
       const method = 'POST';
       const credentials = 'include';
 
-      return fetch(`https://p.ieyasu.co/works/${el.dataset.dayId}`, { method, body, credentials });
+      return fetch(`https://p.ieyasu.co/works/${el.dataset.dayId}`, { method, body, credentials, redirect: 'manual' });
     })).then(() => {
       location.reload();
     });
   };
-  base.appendChild(div);
+
+  div_regist = Object.assign(document.createElement('div'), { className: 'btn btnSubmit', innerText: '一括登録', onclick: submitAction });
+  Object.assign(div_regist.dataset, { key: 'commit', value: '登録する' });
+
+  div_regist_apply = Object.assign(document.createElement('div'), { className: 'btn btnSubmit', innerText: '一括登録&申請', onclick: submitAction });
+  Object.assign(div_regist_apply.dataset, { key: 'add_application', value: '申請する' });
+
+  document.getElementById('month_apply').append(div_regist, div_regist_apply);
 })();
